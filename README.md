@@ -1,4 +1,4 @@
-# go_qrcode
+# qrcode
 golang 编码/解码二维码  
 1. 编码采用  github.com/boombuler/barcode
 2. 解码支持采用golang或zbar
