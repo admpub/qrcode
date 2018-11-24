@@ -13,7 +13,7 @@ import (
 	"github.com/admpub/qrcode/decode"
 )
 
-func Decode(file *os.Fiel) (string, error) {
+func Decode(file *os.File) (string, error) {
 	var body string
 	var img image.Image
 	var err error

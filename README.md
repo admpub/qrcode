@@ -18,23 +18,12 @@ import (
 )
 
 func main() {  
-
-	img := qrcode.Encode("test qrcode", 300, 300)
-
-	file, err := os.Create("./test.png")
+	err := png.EncodeToFile("test qrcode", 300, 300,"./test.png")  
 	if err != nil {  
 		fmt.Println(err)  
 		return  
 	}
 
-	defer file.Close()  
-
-	err = png.Encode(file, img)  
-	if err != nil {  
-		fmt.Println(err)  
-		return  
-	}
-
-	value := qrcode.Decode("./test.png")  
+	value := qrcode.DecodeFile("./test.png")  
 	fmt.Println(value)
 }
