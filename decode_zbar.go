@@ -1,6 +1,9 @@
-package go_qrcode
+// +build zbar
+
+package qrcode
 
 import (
+	"errors"
 	"fmt"
 	"image"
 	"image/jpeg"
@@ -8,23 +11,16 @@ import (
 	"os"
 	"strings"
 
-	"github.com/boombuler/barcode"
-	"github.com/boombuler/barcode/qr"
-	"github.com/happyEgg/go_qrcode/decode"
+	"github.com/admpub/qrcode/decode"
 )
 
-const (
-	VERSION = 1.0
-)
-
-func Decode(imgPath string) string {
+func Decode(imgPath string) (string, error) {
 	var body string
 	var img image.Image
 	var err error
 	file, err := os.Open(imgPath)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(-1)
+		return body, err
 	}
 	defer file.Close()
 
@@ -47,8 +43,8 @@ func Decode(imgPath string) string {
 	}
 
 	if err != nil {
-		fmt.Println("decode failed:", err)
-		os.Exit(-1)
+		err = errors.New("decode failed: " + err.Error())
+		return body, err
 	}
 
 	newImg := decode.NewImage(img)
@@ -59,26 +55,5 @@ func Decode(imgPath string) string {
 		body += s.Data
 	}
 
-	return body
-}
-
-func Encode(value string, width, height int) image.Image {
-	code, err := qr.Encode(value, qr.L, qr.Unicode)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(-1)
-	}
-
-	if value != code.Content() {
-		fmt.Println("data differs")
-		os.Exit(-1)
-	}
-
-	codeImg, err := barcode.Scale(code, width, height)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(-1)
-	}
-
-	return codeImg
+	return body, err
 }

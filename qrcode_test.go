@@ -1,4 +1,4 @@
-package go_qrcode
+package qrcode
 
 import (
 	"fmt"
@@ -7,9 +7,13 @@ import (
 	"testing"
 )
 
-func TestQrcode(t *testing.T) {
-	img := Encode("test qrcode", 300, 300)
+// go test -tags zbar
 
+func TestQrcode(t *testing.T) {
+	img, err := Encode("test qrcode", 300, 300)
+	if err != nil {
+		t.Fatal(err)
+	}
 	file, err := os.Create("./test.png")
 	if err != nil {
 		t.Fatal(err)
@@ -22,6 +26,9 @@ func TestQrcode(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	value := Decode("./test.png")
+	value, err := Decode("./test.png")
+	if err != nil {
+		t.Fatal(err)
+	}
 	fmt.Println(value)
 }
