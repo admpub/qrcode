@@ -4,6 +4,7 @@ import (
 	"errors"
 	"image"
 	"image/png"
+	"io"
 	"os"
 
 	"github.com/boombuler/barcode"
@@ -28,16 +29,20 @@ func Encode(value string, width, height int) (image.Image, error) {
 	return codeImg, err
 }
 
-func EncodeToFile(value string, width, height int, qrcodeFile string) error {
+func EncodeToWriter(value string, width, height int, writer io.Writer) error {
 	img, err := Encode(value, width, height)
 	if err != nil {
 		return err
 	}
+	err = png.Encode(writer, img)
+	return err
+}
+
+func EncodeToFile(value string, width, height int, qrcodeFile string) error {
 	file, err := os.Create(qrcodeFile)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
-	err = png.Encode(file, img)
-	return err
+	return EncodeToWriter(value, width, height, file)
 }
