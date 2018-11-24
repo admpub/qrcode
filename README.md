@@ -30,6 +30,12 @@ func main() {
 ```
 
 # 如何安装zbar
+## Ubuntu
+```
+sudo apt-get install libzbar-dev
+```
+
+## CentOS
 ```shell
 sudo yum -y install epel-release pygtk2.x86_64 zbar-pygtk.x86_64 pygtk2-devel.x86_64 pygtk2-doc.noarch pygobject2.x86_64 pygobject2-devel.x86_64 pygobject2-doc.x86_64 gtk2 gtk2-devel gtk2-devel-docs pdftk ImageMagick ImageMagick-devel ghostscript Python-imaging python-devel python-gtk2-dev libqt4-dev PyQt4.x86_64 PyQt4-devel.x86_64
 
