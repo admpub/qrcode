@@ -26,7 +26,7 @@ func TestQrcode(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	value, err := Decode("./test.png")
+	value, err := DecodeFile("./test.png")
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -4,7 +4,6 @@ package qrcode
 
 import (
 	"errors"
-	"fmt"
 	"image"
 	"image/jpeg"
 	"image/png"
@@ -14,20 +13,14 @@ import (
 	"github.com/admpub/qrcode/decode"
 )
 
-func Decode(imgPath string) (string, error) {
+func Decode(file *os.Fiel) (string, error) {
 	var body string
 	var img image.Image
 	var err error
-	file, err := os.Open(imgPath)
-	if err != nil {
-		return body, err
-	}
-	defer file.Close()
-
 	imageTypeArr := strings.Split(file.Name(), ".")
 	if len(imageTypeArr) <= 1 {
-		fmt.Println("Image file format error")
-		os.Exit(-1)
+		err = errors.New("Image file format error")
+		return body, err
 	}
 
 	imageType := imageTypeArr[len(imageTypeArr)-1]
@@ -38,8 +31,8 @@ func Decode(imgPath string) (string, error) {
 	case "png":
 		img, err = png.Decode(file)
 	default:
-		fmt.Println("Image file format error")
-		os.Exit(-1)
+		err = errors.New("Image file format error")
+		return body, err
 	}
 
 	if err != nil {
@@ -56,4 +49,13 @@ func Decode(imgPath string) (string, error) {
 	}
 
 	return body, err
+}
+
+func DecodeFile(imgPath string) (string, error) {
+	fi, err := os.Open(imgPath)
+	if err != nil {
+		return ``, err
+	}
+	defer fi.Close()
+	return Decode(fi)
 }

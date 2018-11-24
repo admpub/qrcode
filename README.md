@@ -2,7 +2,7 @@
 golang 编码,解码二维码 ，感谢 bieber的帮助  
 解码需要#include <zbar.h> c语言库的支持（例如：pip install zbar）
 
-开始要 go get github.com/happyEgg/go_qrcode  
+开始要 go get github.com/admpub/qrcode  
 
 引入第三方库 go get github.com/boombuler/barcode  
 
@@ -14,7 +14,7 @@ import (
 	"image/png"  
 	"os"  
 
-	"github.com/happyEgg/go_qrcode"
+	"github.com/admpub/qrcode"
 )
 
 func main() {  
