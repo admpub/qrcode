@@ -21,8 +21,8 @@ func Decode(reader io.Reader, imageType string) (string, error) {
 	if len(imageType) == 0 {
 		imageType = `png`
 	}
-	if file, ok := reader.(*os.File); ok {
-		fileName := file.Name()
+	if name, ok := reader.(Name); ok {
+		fileName := name.Name()
 		p := strings.LastIndex(fileName, `.`)
 		if p < 0 || len(fileName) <= p+1 {
 			err = errors.New("Image file format error")
