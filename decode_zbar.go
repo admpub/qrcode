@@ -28,7 +28,7 @@ func Decode(reader io.Reader, imageType string) (string, error) {
 			err = errors.New("Image file format error")
 			return body, err
 		}
-		imageType := fileName[p+1:]
+		imageType = fileName[p+1:]
 	}
 
 	switch strings.ToLower(imageType) {
